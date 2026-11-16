@@ -1,0 +1,12 @@
+import {readFileSync,appendFileSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+const pkg=JSON.parse(readFileSync('package.json','utf8'));
+if(process.env.RELEASE_TAG!=='v'+pkg.version||pkg.private)throw Error('Invalid release version');
+const repo=typeof pkg.repository==='string'?pkg.repository:pkg.repository?.url;
+const expected='git+https://github.com/'+process.env.EXPECTED_REPO+'.git';
+if(repo!==expected)throw Error('Repository identity must match the actual publishing repository');
+const [major,minor,patch]=process.env.npm_config_user_agent?.match(/npm\/(\d+)\.(\d+)\.(\d+)/)?.slice(1).map(Number)??execFileSync('npm',['--version'],{encoding:'utf8'}).trim().split('.').map(Number);
+if(major<11||(major===11&&(minor<5||(minor===5&&patch<1))))throw Error('npm >=11.5.1 required');
+const commit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+if(process.env.GITHUB_REF !== 'refs/tags/'+process.env.RELEASE_TAG || process.env.GITHUB_SHA !== commit) throw Error('Run publication on the matching tag; provenance must identify the verified commit');
+appendFileSync(process.env.GITHUB_OUTPUT,'commit='+commit+'\ndist_tag='+(pkg.version.includes('-')?'next':'latest')+'\n');

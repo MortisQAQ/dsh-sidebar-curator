@@ -1,0 +1,18 @@
+{
+  "contractVersion": 1,
+  "slot": "sidebar.navigation",
+  "slotKind": "single",
+  "dshVersion": "0.2.2-rc.1",
+  "sources": [
+    {
+      "kind": "npm SDK",
+      "sha256": "0a0a32382391acee1a692cf7d2529a2669cc8cc23d4d83b446f6247c3c4562c4"
+    },
+    {
+      "kind": "current desktop bundle",
+      "sha256": "1cc667401af9b64c5a90a5e10f8c085c2dad2852ebe4ed0e69dde5071f531653"
+    }
+  ],
+  "runtimeGuiVerified": false,
+  "notes": "Hashes allow adapter generation only; runtime GUI acceptance is still required."
+}

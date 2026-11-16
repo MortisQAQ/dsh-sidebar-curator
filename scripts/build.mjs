@@ -1,0 +1,10 @@
+import {build} from 'esbuild';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+const pkg=JSON.parse(await readFile('package.json','utf8'));
+await mkdir('lib',{recursive:true});
+await build({entryPoints:['src/index.ts'],outfile:'lib/index.js',bundle:true,format:'esm',platform:'node',target:'node22'});
+const result=await build({entryPoints:['src/client.tsx'],bundle:true,write:false,format:'cjs',platform:'browser',target:'es2022',jsx:'automatic',external:['react','react-dom','react/jsx-runtime','@deepseek-ai/*']});
+const text=result.outputFiles[0].text;
+if (/require\(["']node:/.test(text)) throw Error('Node import in browser bundle');
+await writeFile('lib/client.js','window.__ModuleLoader__.load({id:'+JSON.stringify(pkg.name)+',factory:(require)=>{const module={exports:{}};const exports=module.exports;\n'+text+'\nreturn module.exports;}});\n');
+console.log('Built host and DSH ModuleLoader browser bundle');

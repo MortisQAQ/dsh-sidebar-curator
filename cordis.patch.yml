@@ -1,0 +1,4 @@
+- insert:
+    - id: dsh-sidebar-curator
+      name: dsh-sidebar-curator
+      config: {}
