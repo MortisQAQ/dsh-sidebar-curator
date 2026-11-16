@@ -20,6 +20,7 @@
     "lib",
     "src",
     "scripts/adapter.mjs",
+    "scripts/create-adapter-package.mjs",
     "adapters",
     "cordis.patch.yml",
     "README.md",
