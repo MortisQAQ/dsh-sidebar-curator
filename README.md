@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-开发中，尚未发布 npm、尚未在现有桌面 GUI 安装。需要 navigation-v1 宿主适配；未知宿主保持原生导航。不是 npm 上 TLEWA 维护的 dsh-sidebar-organizer，也未采用该项目 DOM 收纳代码。
+npm 已发布 `dsh-sidebar-curator@0.1.0`；同发行版隔离 GUI 已完成收纳与回滚验收，正式 desktop profile 已安装依赖与适配配置，等待桌面重载后验证。需要 navigation-v1 宿主适配；未知宿主保持原生导航。不是 npm 上 TLEWA 维护的 dsh-sidebar-organizer，也未采用该项目 DOM 收纳代码。
 
 ## 开发
 
@@ -41,4 +41,4 @@ node scripts/adapter.mjs generate path/to/sidebar/lib/client.js output/client.js
 
 适配目标当前为 DSH 0.2.2-rc.1 原生 SidebarRoot 结构，契约为 single 包装槽位 sidebar.navigation（当前 SDK 的 kind 不包含 hoc）。原导航作为 children 与 fallback；没有 actions 时显示全部入口。部署前必须测试对应发布版，不盲目改写 app.asar；保留原件并明确恢复步骤。
 
-发布与上游兼容流程见 docs/automation.md。GitHub 仓库：https://github.com/MortisQAQ/dsh-sidebar-curator 。npm 首次发布与 Trusted Publisher 仍需完成登录与绑定。
+发布与上游兼容流程见 docs/automation.md。GitHub 仓库：https://github.com/MortisQAQ/dsh-sidebar-curator 。npm 首次发布已完成；Trusted Publisher 绑定及云端 OIDC 发布仍待包设置页的用户安全密钥验证。桌面安装和恢复见 [安装说明](docs/desktop-installation.md)。
